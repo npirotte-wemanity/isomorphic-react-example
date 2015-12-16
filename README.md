@@ -8,6 +8,8 @@ The api server is a very slim REST service for managing Todo Tasks.
 
 The app uses Webpack and babel for code transpilation.
 
+I choose to use material-ui to demonstrate the ability to generate complex layout on the server without pain (the cost is a slow front-end, material-ui is a very heavy framework).
+
 ## Run the app
 
 First install dependencies
