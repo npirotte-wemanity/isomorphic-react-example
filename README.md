@@ -28,13 +28,13 @@ Open a new command tool and lift up the API server
 node api.js
 ```
 ### Rendering server
-Open a new command tool and lift up the VIEW server and visir localhost:3000
+Open a new command tool, lift up the VIEW server and visit localhost:3000
 ```
 node index.js
 ```
 
 ### non rendering server (for comparison)
-Open a new command tool and lift up the VIEW server and visir localhost:2000
+Open a new command tool, lift up the VIEW server and visit localhost:2000
 ```
 node index_unrendered.js
 ```
