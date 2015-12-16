@@ -1,0 +1,41 @@
+{
+  "name": "flux-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-core": "^6.2.0",
+    "babel-loader": "^6.2.0",
+    "classnames": "^2.2.0",
+    "classnames-loader": "^1.0.0",
+    "css-loader": "^0.23.0",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "gulp-webpack": "^1.5.0",
+    "less-loader": "^2.2.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.6"
+  },
+  "dependencies": {
+    "babel": "^6.1.18",
+    "body-parser": "^1.14.1",
+    "clay-request": "^0.4.4",
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "history": "^1.13.1",
+    "httpify": "^3.0.0",
+    "material-ui": "^0.13.4",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-router": "^1.0.0",
+    "react-tap-event-plugin": "^0.2.1",
+    "reflux": "^0.3.0",
+    "request": "^2.67.0",
+    "underscore": "^1.8.3"
+  }
+}
