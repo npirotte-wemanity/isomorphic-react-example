@@ -2,7 +2,7 @@
 
 This is a little playground about React, Reflux and Isomorphic server side rendering.
 
-This demonstrate the set up of a microservice architectured Website composed by a rendering server (index.js) and un api only server (api.js)
+This demonstrate the set up of a microservice architectured Website composed by a rendering server (index.js) and an api only server (api.js)
 
 The api server is a very slim REST service for managing Todo Tasks.
 
