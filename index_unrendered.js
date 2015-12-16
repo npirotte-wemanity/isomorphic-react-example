@@ -10,4 +10,4 @@ const PORT = process.env.PORT || 2000;
 
 server.listen(PORT, function () {
   console.log('Server listening on', PORT);
-});
+})

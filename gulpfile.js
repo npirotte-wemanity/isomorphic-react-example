@@ -1,6 +1,7 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var gulp = require('gulp')
 var webpack = require('gulp-webpack')
+var uglify = require('gulp-uglify')
 
 gulp.task('default', ['pack'])
 
@@ -37,5 +38,6 @@ gulp.task('pack', function () {
         new ExtractTextPlugin("styles.css")
       ]
     }))
+    .pipe(uglify())
     .pipe(gulp.dest('dist'))
 })
