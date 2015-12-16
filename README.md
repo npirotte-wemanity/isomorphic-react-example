@@ -12,6 +12,10 @@ I choose to use material-ui to demonstrate the ability to generate complex layou
 
 I set up a isomorphic framework and a client only framework for demonstrate the advantages of isomorphism. Load the 2 apps (iso & client) while simulating a 2G network, you will see the magin out there.
 
+Time to view the content on 2G with isomorphism : around 500ms
+
+Time to view the content on 2G without isomorphism : around 40s (the material ui generate heavy scripts)
+
 ## Run the app
 
 First install dependencies
