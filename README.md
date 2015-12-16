@@ -6,6 +6,8 @@ This demonstrate the set up of a microservice architectured Website composed by 
 
 The api server is a very slim REST service for managing Todo Tasks.
 
+The app uses Webpack and babel for code transpilation.
+
 ## Run the app
 
 First install dependencies
