@@ -10,6 +10,8 @@ The app uses Webpack and babel for code transpilation.
 
 I choose to use material-ui to demonstrate the ability to generate complex layout on the server without pain (the cost is a slow front-end, material-ui is a very heavy framework).
 
+I set up a isomorphic framework and a client only framework for demonstrate the advantages of isomorphism. Load the 2 apps (iso & client) while simulating a 2G network, you will see the magin out there.
+
 ## Run the app
 
 First install dependencies
@@ -21,10 +23,16 @@ Open a new command tool and lift up the API server
 ```
 node api.js
 ```
-
-Open a new command tool and lift up the VIEW server
+### Rendering server
+Open a new command tool and lift up the VIEW server and visir localhost:3000
 ```
 node index.js
+```
+
+### non rendering server (for comparison)
+Open a new command tool and lift up the VIEW server and visir localhost:2000
+```
+node index_unrendered.js
 ```
 
 To clean up API data juste restar this service.
