@@ -13,15 +13,7 @@ import TodoListStore from './src/Stores/TodoStore'
 
 const app = express()
 
-app.get('/**/*.js', (req, res) => {
-  fs.readFile('.' + req.originalUrl, 'utf8', function (err, data) {
-    if (err) {
-      return // console.log(err)
-    }
-
-    res.send(data)
-  })
-})
+app.use('/dist', express.static('dist'));
 
 app.use((req, res) => {
   GLOBAL.navigator = {
