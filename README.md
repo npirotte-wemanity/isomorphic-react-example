@@ -1,3 +1,5 @@
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 # isomorphic-react-example
 
 This is a little playground about React, Reflux and Isomorphic server side rendering.

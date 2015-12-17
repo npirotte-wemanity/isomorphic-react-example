@@ -6,7 +6,7 @@ import request from '../Helpers/Request'
 
 var todoCounter = 0
 
-const endpoint = 'http://localhost:4000/tasks'
+const ENDPOINT = 'http://localhost:4000/tasks'
 
 const LOCAL_STORAGE_KEY = 'todos'
 
@@ -20,10 +20,9 @@ const TodoListStore = Reflux.createStore({
   listenables: [TodoActions],
 
   init: function () {
-    var _this = this
     var loadedList
     try {
-      // loadedList = window.localStorage.getItem(LOCAL_STORAGE_KEY)
+      loadedList = window.localStorage.getItem(LOCAL_STORAGE_KEY)
     } catch (e) {
 
     }
@@ -43,14 +42,11 @@ const TodoListStore = Reflux.createStore({
     this.updateList([todo].concat(this.list))
 
     request.post({
-      url: endpoint,
+      url: ENDPOINT,
       method: 'POST',
       type: 'application/x-www-form-urlencoded',
       data: todo
-    }, function (err, res) {
-      console.log(res)
     })
-
   },
 
   onRemoveItem: function (itemKey) {
@@ -59,7 +55,7 @@ const TodoListStore = Reflux.createStore({
     }))
 
     request.delete({
-      url: endpoint + '/' + itemKey
+      url: ENDPOINT + '/' + itemKey
     })
   },
 
@@ -70,7 +66,7 @@ const TodoListStore = Reflux.createStore({
     }
 
     request.put({
-      url: endpoint + '/' + itemKey,
+      url: ENDPOINT + '/' + itemKey,
       data: item
     })
 
@@ -84,9 +80,9 @@ const TodoListStore = Reflux.createStore({
   },
 
   updateList: function (list) {
-
-    if (typeof window !== 'undefined')
+    if (typeof window !== 'undefined') {
       window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(list))
+    }
 
     this.list = list
     this.trigger(list)
@@ -97,20 +93,23 @@ const TodoListStore = Reflux.createStore({
   },
 
   fetchData: function (cb) {
-    var _this = this
     request.get({
       url: 'http://localhost:4000/tasks'
-    }, function (err, res) {
+    }, (err, res) => {
+      if (err) {
+        return
+      }
       if (typeof cb === 'function') {
-        var list = res.map(function(task) {
-          task.isCompleted = task.isCompleted == 'true'
+        var list = res.map(function (task) {
+          // booleean in json response is interpreted as a string instead of a booleean
+          task.isCompleted = task.isCompleted == 'true' // eslint-disable-line
 
           if (Number(task.key) > todoCounter) {
             todoCounter = Number(task.key) + 1
           }
           return task
         })
-        _this.updateList(list)
+        this.updateList(list)
         cb(null, list)
       }
     })

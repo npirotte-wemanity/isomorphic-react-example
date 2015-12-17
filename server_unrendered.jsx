@@ -1,16 +1,10 @@
-import fs from 'fs'
 import express from 'express'
 
 const app = express()
 
-app.use('/dist', express.static('dist'));
+app.use('/dist', express.static('dist'))
 
 app.use((req, res) => {
-
-
-  // we fill the todo store with an api fietch before rendering
-
-
   const HTML = `
   <!DOCTYPE html>
   <html>
@@ -25,8 +19,7 @@ app.use((req, res) => {
       </body>
     </html>`
 
-    res.send(HTML)
-
+  res.send(HTML)
 })
 
 module.exports = app

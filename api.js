@@ -21,7 +21,6 @@ server.get('/tasks', function (req, res) {
 
 server.post('/tasks', function (req, res) {
   tasks.unshift(req.body)
-
   res.send(req.body)
 })
 
@@ -29,7 +28,6 @@ server.delete('/tasks/:taskId', function (req, res) {
   tasks = tasks.filter(function (task) {
     return task.key !== req.params.taskId
   })
-
   res.send()
 })
 
@@ -40,6 +38,7 @@ server.put('/tasks/:taskId', function (req, res) {
     }
     return task
   })
+  res.send()
 })
 
 const PORT = process.env.PORT || 4000
