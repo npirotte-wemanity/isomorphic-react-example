@@ -2,30 +2,32 @@ import React from 'react'
 
 import TodoActions from '../Actions/TodoActions.js'
 
-import {AppBar, TextField} from 'material-ui/lib'
-
 var TodoHeader = React.createClass({
   render () {
     return (
       <header id='header'>
-        <AppBar
-          title='Todos'
-          showMenuIconButton={false} />
-        <TextField id='new-todo' hintText='What needs to be done?' autoFocus onKeyUp={this.handleValueChange}/>
+        <div>
+          <h3>
+            Todo
+          </h3>
+          <form onSubmit={this.handleSubmit}>
+            <div className='control-group'>
+              <input ref='text' className='form-control' type='text' id='new-todo' placeholder='What needs to be done?' autoFocus/>
+            </div>
+          </form>
+          <br />
+        </div>
       </header>
     )
   },
 
-  handleValueChange (evt) {
-    var text = evt.target.value
-    var which = evt.which
+  handleSubmit (evt) {
+    const input = this.refs.text
+    var text = input.value
+    TodoActions.addItem(text)
+    input.value = ''
 
-    if (which === 13 && text) {
-      TodoActions.addItem(text)
-      evt.target.value = ''
-    } else if (which === 27) {
-      evt.target.value = ''
-    }
+    evt.preventDefault()
   }
 })
 

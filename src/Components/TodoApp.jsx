@@ -1,16 +1,15 @@
 import React from 'react'
 import Reflux from 'reflux'
-import {RouteContext} from 'react-router'
 
 import TodoListStore from '../Stores/TodoStore.js'
 
 import TodoHeader from './TodoHeader.jsx'
 import TodoFooter from './TodoFooter.jsx'
-import {Card, CardText} from 'material-ui/lib/card'
+import TodoMain from './TodoMain.jsx'
 
 const TodoApp = React.createClass({
 
-  mixins: [RouteContext, Reflux.connect(TodoListStore, 'list')],
+  mixins: [Reflux.connect(TodoListStore, 'list')],
 
   getInitialState: function () {
     return {
@@ -20,14 +19,16 @@ const TodoApp = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <TodoHeader />
-        <Card>
-          <CardText>
-            {this.props.children}
-          </CardText>
-        <TodoFooter />
-        </Card>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-4'>
+            <TodoHeader />
+              <section className='mdl-layout__content'>
+                <TodoMain />
+              </section>
+            <TodoFooter />
+          </div>
+        </div>
       </div>
     )
   }

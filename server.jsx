@@ -2,21 +2,23 @@ import express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 
-import { Router, Route, IndexRoute } from 'react-router'
-import createMemoryHistory from 'history/lib/createMemoryHistory'
-
 import TodoListStore from './src/Stores/TodoStore'
 
-import TodoMain from './src/Components/TodoMain.jsx'
 import TodoApp from './src/Components/TodoApp.jsx'
+
+// set request provider
+import Request from './src/Helpers/Request'
+Request.setServerProvider(require('request'))
 
 const app = express()
 
 // set dist folder accessible
 app.use('/dist', express.static('dist'))
+app.use('/node_modules', express.static('node_modules'))
 
 // handle all other requests
 app.use((req, res) => {
+  console.log(req.url)
   // set user agent for server rendering
   GLOBAL.navigator = {
     userAgent: req.headers['user-agent']
@@ -29,14 +31,7 @@ app.use((req, res) => {
     }
 
     const InitialComponent = (
-      <Router history={createMemoryHistory()}>
-        <Route path='/' component={TodoApp}>
-          <IndexRoute component={TodoMain}/>
-          <Route name='All' path='/' component={TodoMain} />
-          <Route name='Completed' path='/completed' component={TodoMain} />
-          <Route name='Active' path='/active' component={TodoMain} />
-        </Route>
-      </Router>
+      <TodoApp />
     )
 
     const componentHTML = renderToString(InitialComponent)
@@ -47,6 +42,7 @@ app.use((req, res) => {
         <meta charset="utf-8">
         <title>Isomorphic Redux Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
       </head>
       <body style="margin: 0">
         <div id="todo-app">${componentHTML}</div>

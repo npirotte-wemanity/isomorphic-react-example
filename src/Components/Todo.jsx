@@ -2,9 +2,6 @@ import React from 'react'
 
 import TodoActions from '../Actions/TodoActions.js'
 
-import ListItem from 'material-ui/lib/lists/list-item'
-import {Checkbox, FlatButton} from 'material-ui/lib'
-
 var Todo = React.createClass({
   propTypes: {
     todo: React.PropTypes.object.isRequired
@@ -12,12 +9,13 @@ var Todo = React.createClass({
 
   render () {
     return (
-      <ListItem
-        onClick={this.handleToggle}
-        leftIcon={<Checkbox checked={this.props.todo.isCompleted} />}
-        rightIconButton={<FlatButton label='Delete' onClick={this.handleDelete} />}
-        primaryText={this.props.todo.label}
-        />
+      <div className='list-group-item'>
+        <button onClick={this.handleDelete} className='btn btn-danger btn-xs pull-right'>Delete</button>
+        <label>
+          <input type='checkbox' checked={this.props.todo.isCompleted} onChange={this.handleToggle} />
+          <span> {this.props.todo.label}</span>
+        </label>
+      </div>
     )
   },
 

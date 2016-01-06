@@ -3,8 +3,6 @@ import Reflux from 'reflux'
 import {State} from 'react-router'
 
 import TodoListStore from '../Stores/TodoStore.js'
-
-import List from 'material-ui/lib/lists/list'
 import Todo from './Todo.jsx'
 
 const TodoMain = React.createClass({
@@ -24,11 +22,11 @@ const TodoMain = React.createClass({
   render () {
     return (
       <section id='main'>
-        <List>
+        <div className='list-group'>
           {this.state.list.map((todo) => {
             return <Todo todo={todo} key={todo.key} />
           })}
-        </List>
+        </div>
       </section>
     )
   }

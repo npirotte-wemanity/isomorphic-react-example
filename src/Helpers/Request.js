@@ -4,7 +4,12 @@
 
 import isServer from './isServer'
 
+var serverRequestProvider
 var request = {}
+
+request.setServerProvider = function (provider) {
+  serverRequestProvider = provider
+}
 
 function serialize (params) {
   var query = ''
@@ -16,10 +21,10 @@ function serialize (params) {
 }
 
 request.get = function (params, cb) {
-  if (isServer()) {
-    var request = require('request')
+  if (isServer() && serverRequestProvider) {
+    // var request = require('request')
 
-    request(params.url, function (error, response, body) {
+    serverRequestProvider(params.url, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         if (typeof cb === 'function') {
           cb(null, JSON.parse(body))
