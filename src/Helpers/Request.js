@@ -113,12 +113,20 @@ request.delete = function (params, cb) {
 }
 
 request.put = function (params, cb) {
+  var url = params.url
+  var serializedParams = serialize(params.data)
   if (isServer()) {
-
+    serverRequestProvider.put({
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      url: url,
+      body: serializedParams
+    }, function (err, res, body) {
+      if (typeof cb === 'function') {
+        cb(null, res)
+      }
+    })
   } else {
     var http = new XMLHttpRequest()
-    var url = params.url
-    var serializedParams = serialize(params.data)
     http.open('PUT', url, true)
 
     // Send the proper header information along with the request

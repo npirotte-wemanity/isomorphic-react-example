@@ -23,20 +23,51 @@ app.use('/node_modules', express.static('node_modules'))
 // this part demonstrate how to use stores for enable a broken javascript interface to work properly (we permit creation and deletion)
 // this code should be placed in another separate file
 
+/**
+* create a task
+*/
 app.post('/todos', (req, res) => {
   if (req.body.text) {
     TodoListStore.onAddItem(req.body.text, function () {
-      res.redirect('/')
+      res.redirect(req.headers.referrer || req.headers.referer)
     })
   } else {
-    res.redirect('/')
+    res.redirect(req.headers.referrer || req.headers.referer)
   }
 })
 
+/**
+* create modfified tasks
+*/
+app.post('/todos/save', (req, res) => {
+  var todoKeys = req.body.todo
+  var toUpdate = {}
+
+  // construct a key - value object
+  todoKeys.forEach(function (todoKey) {
+    var originalValue = req.body['todo-' + todoKey + '-original'] == 'true' // eslint-disable-line
+    var newValue = req.body['todo-' + todoKey] == 'true' // eslint-disable-line
+
+    if (originalValue !== newValue) {
+      toUpdate[todoKey] = newValue
+    }
+  })
+
+  // we need to fill up the store before update
+  TodoListStore.fetchData((err, data) => {
+    TodoListStore.updateBach(toUpdate, function () {
+      res.redirect(req.headers.referrer || req.headers.referer)
+    })
+  })
+})
+
+/**
+* delete a task
+*/
 app.get('/todos/:id/delete', (req, res) => {
   var todoKey = req.params.id
   TodoListStore.onRemoveItem(todoKey, function () {
-    res.redirect('/')
+    res.redirect(req.headers.referrer || req.headers.referer)
   })
 })
 

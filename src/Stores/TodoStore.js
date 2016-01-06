@@ -59,18 +59,40 @@ const TodoListStore = Reflux.createStore({
     }, cb)
   },
 
-  onToggleItem: function (itemKey) {
+  onToggleItem: function (itemKey, isCompleted, cb) {
     var item = getItemByKey(this.list, itemKey)
     if (item) {
-      item.isCompleted = !item.isCompleted
+      item.isCompleted = isCompleted
+    } else {
+      item = {
+        key: itemKey,
+        isCompleted: isCompleted
+      }
     }
 
     request.put({
       url: ENDPOINT + '/' + itemKey,
       data: item
+    }, function () {
+      if (typeof cb === 'function') {
+        cb()
+      }
     })
 
     this.updateList(this.list)
+  },
+
+  updateBach: function (items, cb) {
+    var count = Object.keys(items).length
+    var i = 0
+
+    for (var key in items) {
+      this.onToggleItem(key, items[key], function () {
+        if (++i === count && typeof cb === 'function') {
+          cb()
+        }
+      })
+    }
   },
 
   onClearCompleted: function () {

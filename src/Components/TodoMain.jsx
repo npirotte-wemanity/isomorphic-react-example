@@ -22,11 +22,18 @@ const TodoMain = React.createClass({
   render () {
     return (
       <section id='main'>
-        <div className='list-group'>
-          {this.state.list.map((todo) => {
-            return <Todo todo={todo} key={todo.key} />
-          })}
-        </div>
+        <form method='POST' action='todos/save'>
+          <div className='list-group'>
+            {this.state.list.map((todo) => {
+              return <Todo todo={todo} key={todo.key} />
+            })}
+          </div>
+          <noscript>
+            <button className='btn btn-info'>Save</button>
+            <br />
+            <br />
+          </noscript>
+        </form>
       </section>
     )
   }
