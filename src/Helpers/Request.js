@@ -37,10 +37,6 @@ request.get = function (params, cb) {
     var serializedParams = serialize(params.data)
     http.open('GET', url, true)
 
-    // Send the proper header information along with the request
-    // http.setRequestHeader("Content-length", params.length);
-    // http.setRequestHeader("Connection", "close");
-
     http.onreadystatechange = function () {// Call a function when the state changes.
       if (http.readyState === 4 && http.status === 200) {
         if (typeof cb === 'function') {
@@ -53,14 +49,22 @@ request.get = function (params, cb) {
 }
 
 request.post = function (params, cb) {
-  if (isServer()) {
+  var url = params.url
+  var serializedParams = serialize(params.data)
 
+  if (isServer()) {
+    serverRequestProvider.post({
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      url: url,
+      body: serializedParams
+    }, function (err, res, body) {
+      if (typeof cb === 'function') {
+        cb(null, res)
+      }
+    })
   } else {
     var http = new XMLHttpRequest()
-    var url = params.url
-    var serializedParams = serialize(params.data)
     http.open('POST', url, true)
-
     // Send the proper header information along with the request
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     // http.setRequestHeader("Content-length", params.length);
@@ -78,11 +82,18 @@ request.post = function (params, cb) {
 }
 
 request.delete = function (params, cb) {
+  var url = params.url
   if (isServer()) {
-
+    serverRequestProvider.del({
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      url: url,
+    }, function (err, res, body) {
+      if (typeof cb === 'function') {
+        cb(null, res)
+      }
+    })
   } else {
     var http = new XMLHttpRequest()
-    var url = params.url
     // var params = serialize(params.data)
     http.open('DELETE', url, true)
 

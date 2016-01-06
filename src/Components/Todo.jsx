@@ -8,9 +8,10 @@ var Todo = React.createClass({
   },
 
   render () {
+    var href = 'todos/' + this.props.todo.key + '/delete'
     return (
       <div className='list-group-item'>
-        <button onClick={this.handleDelete} className='btn btn-danger btn-xs pull-right'>Delete</button>
+        <a onClick={this.handleDelete} href={href} className='btn btn-danger btn-xs pull-right'>Delete</a>
         <label>
           <input type='checkbox' checked={this.props.todo.isCompleted} onChange={this.handleToggle} />
           <span> {this.props.todo.label}</span>
@@ -25,7 +26,7 @@ var Todo = React.createClass({
 
   handleDelete (event) {
     TodoActions.removeItem(this.props.todo.key)
-    event.stopPropagation()
+    event.preventDefault()
   }
 })
 

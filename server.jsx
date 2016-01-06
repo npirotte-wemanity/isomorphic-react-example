@@ -1,5 +1,6 @@
 import express from 'express'
 import React from 'react'
+import bodyParser from 'body-parser'
 import { renderToString } from 'react-dom/server'
 
 import TodoListStore from './src/Stores/TodoStore'
@@ -12,9 +13,32 @@ Request.setServerProvider(require('request'))
 
 const app = express()
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 // set dist folder accessible
 app.use('/dist', express.static('dist'))
 app.use('/node_modules', express.static('node_modules'))
+
+// this part demonstrate how to use stores for enable a broken javascript interface to work properly (we permit creation and deletion)
+// this code should be placed in another separate file
+
+app.post('/todos', (req, res) => {
+  if (req.body.text) {
+    TodoListStore.onAddItem(req.body.text, function () {
+      res.redirect('/')
+    })
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/todos/:id/delete', (req, res) => {
+  var todoKey = req.params.id
+  TodoListStore.onRemoveItem(todoKey, function () {
+    res.redirect('/')
+  })
+})
 
 // handle all other requests
 app.use((req, res) => {

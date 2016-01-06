@@ -10,9 +10,9 @@ var TodoHeader = React.createClass({
           <h3>
             Todo
           </h3>
-          <form onSubmit={this.handleSubmit}>
+          <form method='POST' action='/todos' onSubmit={this.handleSubmit}>
             <div className='control-group'>
-              <input ref='text' className='form-control' type='text' id='new-todo' placeholder='What needs to be done?' autoFocus/>
+              <input ref='text' name='text' className='form-control' type='text' id='new-todo' placeholder='What needs to be done?' autoFocus/>
             </div>
           </form>
           <br />
@@ -24,6 +24,7 @@ var TodoHeader = React.createClass({
   handleSubmit (evt) {
     const input = this.refs.text
     var text = input.value
+
     TodoActions.addItem(text)
     input.value = ''
 

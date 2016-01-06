@@ -37,7 +37,7 @@ const TodoListStore = Reflux.createStore({
     }
   },
 
-  onAddItem: function (label) {
+  onAddItem: function (label, cb) {
     var todo = new Todo(label)
     this.updateList([todo].concat(this.list))
 
@@ -46,17 +46,17 @@ const TodoListStore = Reflux.createStore({
       method: 'POST',
       type: 'application/x-www-form-urlencoded',
       data: todo
-    })
+    }, cb)
   },
 
-  onRemoveItem: function (itemKey) {
+  onRemoveItem: function (itemKey, cb) {
     this.updateList(this.list.filter(function (todo) {
       return todo.key !== itemKey
     }))
 
     request.delete({
       url: ENDPOINT + '/' + itemKey
-    })
+    }, cb)
   },
 
   onToggleItem: function (itemKey) {
