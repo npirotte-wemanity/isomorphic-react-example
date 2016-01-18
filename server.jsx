@@ -55,6 +55,10 @@ app.post('/todos/save', (req, res) => {
 
   // we need to fill up the store before update
   TodoListStore.fetchData((err, data) => {
+    if (err) {
+      console.error(err)
+      res.redirect(req.headers.referrer || req.headers.referer)
+    }
     TodoListStore.updateBach(toUpdate, function () {
       res.redirect(req.headers.referrer || req.headers.referer)
     })
