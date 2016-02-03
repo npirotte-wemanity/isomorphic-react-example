@@ -6,6 +6,8 @@ const server = express()
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
+var id = 0
+
 var tasks = []
 
 server.use(function(req, res, next) {
@@ -20,21 +22,26 @@ server.get('/tasks', function (req, res) {
 })
 
 server.post('/tasks', function (req, res) {
-  tasks.unshift(req.body)
-  res.send(req.body)
+  task = req.body;
+  task.id = ++id
+  task.createdOn = new Date()
+  task.modifiedOn = new Date()
+  tasks.unshift(task)
+  res.send(task)
 })
 
 server.delete('/tasks/:taskId', function (req, res) {
   tasks = tasks.filter(function (task) {
-    return task.key !== req.params.taskId
+    return task.id != req.params.taskId
   })
   res.send()
 })
 
 server.put('/tasks/:taskId', function (req, res) {
   tasks = tasks.map(function (task) {
-    if (task.key === req.params.taskId) {
-      task = req.body
+    if (task.id == req.params.taskId) {
+      task.isCompleted = req.body.isCompleted == 'true'
+      task.modifiedOn = new Date()
     }
     return task
   })

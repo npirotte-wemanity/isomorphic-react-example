@@ -11,7 +11,7 @@ class TaskForm extends React.Component {
     return (
       <div className="TaskForm-component">
         <form onSubmit={this.onFormSubmit}>
-          <input className="form-control" placeholder="Create a new task" />
+          <input ref="description" name="description" className="form-control" placeholder="Create a new task" />
         </form>
       </div>
     )
@@ -19,7 +19,8 @@ class TaskForm extends React.Component {
 
   onFormSubmit (evt) {
     evt.preventDefault()
-    TaskActionCreator.add('tests')
+    TaskActionCreator.add(this.refs.description.value)
+    this.refs.description.value = null
   }
 }
 

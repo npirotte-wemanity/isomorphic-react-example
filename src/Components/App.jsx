@@ -3,6 +3,7 @@ import React from 'react'
 import UserDetails from './User/UserDetails.jsx'
 import TaskList from './Tasks/TaskList.jsx'
 import TaskForm from './Tasks/TaskForm.jsx'
+import TaskSummary from './Tasks/TaskSummary.jsx'
 
 export default class App extends React.Component {
   render() {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
             <UserDetails />
             <TaskForm />
             <TaskList />
+            <TaskSummary />
           </div>
         </div>
       </div>

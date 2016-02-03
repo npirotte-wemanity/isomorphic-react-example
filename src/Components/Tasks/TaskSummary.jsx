@@ -1,11 +1,8 @@
 import React from 'react'
 
-import Task from './Task.jsx'
-
 import TaskStore from '../../Stores/TaskStore.js'
-import TaskActionCreator from '../../ActionCreators/TasksActionCreator.js'
 
-class TaskList extends React.Component {
+class TaskSummary extends React.Component {
   constructor () {
     super()
 
@@ -14,16 +11,14 @@ class TaskList extends React.Component {
 
   componentDidMount () {
     TaskStore.addListener(this.onChange.bind(this))
-    TaskActionCreator.sync()
   }
 
   render () {
+    const nbrTotal = this.state.tasks.size
+    const nbrComplete = this.state.tasks.filter((todo) => { return todo.get('isCompleted') }).size
     return (
-      <div className='TaskList-component'>
-        <h3>Your tasks</h3>
-        <div className='list-group'>
-          {this.state.tasks.map((task: Object) => <Task task={task} key={task.get('id')} />)}
-        </div>
+      <div>
+        {nbrComplete} / {nbrTotal} completed
       </div>
     )
   }
@@ -39,4 +34,4 @@ class TaskList extends React.Component {
   }
 }
 
-export default TaskList
+export default TaskSummary

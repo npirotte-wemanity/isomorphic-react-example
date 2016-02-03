@@ -1,8 +1,6 @@
 /* global XMLHttpRequest */
 
-// very dirty and no dry, on did't take the time to find a good http library ...
-
-import isServer from './isServer'
+// very dirty and no dry, on did't take the time to find a good http library ... 
 
 var serverRequestProvider
 var request = {}
