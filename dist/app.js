@@ -54,11 +54,19 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _HttpProvider = __webpack_require__(178);
+
+	var _client = __webpack_require__(175);
+
+	var _client2 = _interopRequireDefault(_client);
+
 	var _App = __webpack_require__(159);
 
 	var _App2 = _interopRequireDefault(_App);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	(0, _HttpProvider.registerHttpProvider)(_client2.default);
 
 	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('todo-app'));
 
@@ -20458,9 +20466,7 @@
 
 	var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
-	var _client = __webpack_require__(175);
-
-	var _client2 = _interopRequireDefault(_client);
+	var _HttpProvider = __webpack_require__(178);
 
 	var _TaskDeleteAction = __webpack_require__(168);
 
@@ -20520,7 +20526,7 @@
 	    value: function sync(cb) {
 	      var _this2 = this;
 
-	      _client2.default.get({ url: ENDPOINT }, function (err, data) {
+	      (0, _HttpProvider.HttpProvider)().get({ url: ENDPOINT }, function (err, data) {
 	        if (err) {
 	          return;
 	        } else {
@@ -20554,7 +20560,7 @@
 	      var task = _immutable2.default.fromJS({ description: description, id: tempId });
 	      this.tasks = this.tasks.unshift(task);
 
-	      _client2.default.post({
+	      (0, _HttpProvider.HttpProvider)().post({
 	        url: ENDPOINT,
 	        method: 'POST',
 	        type: 'application/x-www-form-urlencoded',
@@ -20587,7 +20593,7 @@
 	        return task !== _task;
 	      });
 
-	      _client2.default.delete({
+	      (0, _HttpProvider.HttpProvider)().delete({
 	        url: ENDPOINT + '/' + task.get('id')
 	      }, cb);
 	    }
@@ -20603,7 +20609,7 @@
 	        return _task.get('id') === task.get('id') ? task : _task;
 	      });
 
-	      _client2.default.put({
+	      (0, _HttpProvider.HttpProvider)().put({
 	        url: ENDPOINT + '/' + task.get('id'),
 	        data: task.toJS()
 	      }, function () {
@@ -25927,6 +25933,29 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskSummary;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.registerHttpProvider = registerHttpProvider;
+	exports.HttpProvider = HttpProvider;
+	var _provider;
+
+	function registerHttpProvider(provider) {
+	  console.log(provider);
+	  _provider = provider;
+	}
+
+	function HttpProvider(provider) {
+	  console.log(_provider);
+	  return _provider;
+	}
 
 /***/ }
 /******/ ]);

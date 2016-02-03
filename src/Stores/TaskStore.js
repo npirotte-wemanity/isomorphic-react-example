@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import BaseStore from './BaseStore'
 import Dispatcher from '../Dispatcher/Dispatcher.js'
 
-import HttpProvider from '../HttpProviders/client.js'
+import {HttpProvider} from '../HttpProviders/HttpProvider.js'
 
 import TaskDeleteAction from '../Actions/Tasks/TaskDeleteAction.js'
 import TaskAddAction from '../Actions/Tasks/TaskAddAction'
@@ -29,7 +29,7 @@ class TaskStore extends BaseStore {
   * Sync data with the server
   */
   sync (cb) {
-    HttpProvider.get({url: ENDPOINT}, (err, data) => {
+    HttpProvider().get({url: ENDPOINT}, (err, data) => {
       if (err) {
         return
       } else {
@@ -55,7 +55,7 @@ class TaskStore extends BaseStore {
     const task = Immutable.fromJS({description: description, id: tempId})
     this.tasks = this.tasks.unshift(task)
 
-    HttpProvider.post({
+    HttpProvider().post({
       url: ENDPOINT,
       method: 'POST',
       type: 'application/x-www-form-urlencoded',
@@ -85,7 +85,7 @@ class TaskStore extends BaseStore {
       return task !== _task
     })
 
-    HttpProvider.delete({
+    HttpProvider().delete({
       url: ENDPOINT + '/' + task.get('id')
     }, cb)
   }
@@ -98,7 +98,7 @@ class TaskStore extends BaseStore {
       return _task.get('id') === task.get('id') ? task : _task
     })
 
-    HttpProvider.put({
+    HttpProvider().put({
       url: ENDPOINT + '/' + task.get('id'),
       data: task.toJS()
     }, function () {

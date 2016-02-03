@@ -1,7 +1,8 @@
 'use strict';
 
 require('babel-core/register')({
-  extensions: [".es6", ".es", ".jsx", ".js"]
+  extensions: [".es6", ".es", ".jsx", ".js"],
+  plugins: ["transform-async-to-generator"]
 });
 
 var server = require('./server');

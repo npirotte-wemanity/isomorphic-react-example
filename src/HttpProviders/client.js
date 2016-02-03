@@ -9,7 +9,7 @@ function serialize (params) {
   return query
 }
 
-var HttpProvider = {}
+const HttpProvider = {}
 
 HttpProvider.get = function (params, cb) {
   var http = new XMLHttpRequest()
