@@ -68,7 +68,11 @@
 
 	(0, _HttpProvider.registerHttpProvider)(_client2.default);
 
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('todo-app'));
+	function render() {
+	  _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('todo-app'));
+	}
+
+	render();
 
 /***/ },
 /* 1 */
@@ -20594,6 +20598,10 @@
 
 	var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
+	var _IsServer = __webpack_require__(179);
+
+	var _IsServer2 = _interopRequireDefault(_IsServer);
+
 	var _HttpProvider = __webpack_require__(159);
 
 	var _TaskDeleteAction = __webpack_require__(170);
@@ -20637,8 +20645,11 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskStore).call(this));
 
-	    _this.tasks = [];
-	    _this.tasks = _immutable2.default.List();
+	    if (!(0, _IsServer2.default)()) {
+	      _this.tasks = _immutable2.default.fromJS(window.appData.taskStore.tasks);
+	    } else {
+	      _this.tasks = _immutable2.default.List();
+	    }
 
 	    _Dispatcher2.default.register(function (action) {
 	      return _this.processAction(action);
@@ -20674,6 +20685,19 @@
 	    key: 'get',
 	    value: function get() {
 	      return this.tasks;
+	    }
+	    /**
+	    * get data into json
+	    */
+
+	  }, {
+	    key: 'getJson',
+	    value: function getJson() {
+	      var data = this.tasks.toJS();
+	      return data.map(function (task) {
+	        console.log(task);
+	        return task;
+	      });
 	    }
 	    /**
 	    * handle add events
@@ -25955,6 +25979,21 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskSummary;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function isServer() {
+	  return typeof window === 'undefined';
+	}
+
+	exports.default = isServer;
 
 /***/ }
 /******/ ]);

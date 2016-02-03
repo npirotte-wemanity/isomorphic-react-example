@@ -8,8 +8,12 @@ registerHttpProvider(clientProvider)
 
 import App from './Components/App.jsx'
 
-ReactDom.render((
-  <App />
-),
-  document.getElementById('todo-app')
-)
+function render () {
+  ReactDom.render((
+    <App />
+  ),
+    document.getElementById('todo-app')
+  )
+}
+
+render()

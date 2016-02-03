@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 
 import BaseStore from './BaseStore'
 import Dispatcher from '../Dispatcher/Dispatcher.js'
+import isServer from '../Helpers/IsServer'
 
 import {HttpProvider} from '../HttpProviders/HttpProvider.js'
 
@@ -20,8 +21,12 @@ function getNextId (items) {
 class TaskStore extends BaseStore {
   constructor () {
     super()
-    this.tasks = []
-    this.tasks = Immutable.List()
+
+    if (!isServer()) {
+      this.tasks = Immutable.fromJS(window.appData.taskStore.tasks)
+    } else {
+      this.tasks = Immutable.List()
+    }
 
     Dispatcher.register((action) => this.processAction(action))
   }
@@ -46,6 +51,16 @@ class TaskStore extends BaseStore {
   */
   get () {
     return this.tasks
+  }
+  /**
+  * get data into json
+  */
+  getJson () {
+    var data = this.tasks.toJS()
+    return data.map((task) => {
+      console.log(task)
+      return task
+    })
   }
   /**
   * handle add events

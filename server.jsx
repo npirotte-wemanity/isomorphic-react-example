@@ -19,6 +19,7 @@ app.use((req, res) => {
   // create render function
   function render () {
     const component = ReactDom.renderToString(<App />)
+    const tasks = TaskStore.get().toJS()
     const HTML = `
     <!DOCTYPE html>
     <html>
@@ -30,6 +31,13 @@ app.use((req, res) => {
       </head>
       <body style="margin: 0">
         <div id="todo-app">${component}</div>
+          <script>
+          window.appData = {
+            taskStore: {
+              tasks: ${JSON.stringify(tasks)}
+            }
+          }
+        </script>
         <script type="application/javascript" src="dist/app.js"></script>
       </body>
     </html>`
@@ -38,8 +46,7 @@ app.use((req, res) => {
   }
 
   // polulate stores and execute rendering
-  TaskStore.sync(console.log)
-  render()
+  TaskStore.sync(render)
 })
 
 module.exports = app
