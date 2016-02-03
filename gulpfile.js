@@ -7,7 +7,7 @@ gulp.task('default', ['pack'])
 gulp.task('pack', function () {
   gulp.src('src/app.jsx')
     .pipe(webpack({
-      watch: false,
+      watch: true,
       output: {
         filename: 'app.js'
       },
@@ -24,6 +24,6 @@ gulp.task('pack', function () {
         ]
       }
     }))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest('dist'))
 })

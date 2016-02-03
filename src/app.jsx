@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import TodoListStore from './Stores/TodoStore'
-import TodoApp from './Components/TodoApp.jsx'
+import App from './Components/App.jsx'
 
-TodoListStore.fetchData(function (err, data) {
   ReactDom.render((
-    <TodoApp />
+    <App />
   ),
-    document.getElementById('todo-app'))
-})
+    document.getElementById('todo-app')
+  )
