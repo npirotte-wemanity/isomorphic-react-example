@@ -18,6 +18,7 @@ server.use(function(req, res, next) {
 })
 
 server.get('/tasks', function (req, res) {
+  console.log(tasks)
   res.send(JSON.stringify(tasks))
 })
 

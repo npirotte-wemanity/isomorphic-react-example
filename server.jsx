@@ -3,6 +3,11 @@ import App from './src/Components/App.jsx'
 import React from 'react'
 import ReactDom from 'react-dom/server'
 
+import {registerHttpProvider} from './src/HttpProviders/HttpProvider'
+import serverHttpProvider from './src/HttpProviders/server'
+
+registerHttpProvider(serverHttpProvider)
+
 import TaskStore from './src/Stores/TaskStore.js'
 
 const app = express()
@@ -33,7 +38,8 @@ app.use((req, res) => {
   }
 
   // polulate stores and execute rendering
-  TaskStore.syn(render)
+  TaskStore.sync(console.log)
+  render()
 })
 
 module.exports = app

@@ -30,6 +30,7 @@ class TaskStore extends BaseStore {
   */
   sync (cb) {
     HttpProvider().get({url: ENDPOINT}, (err, data) => {
+      console.log(err, data)
       if (err) {
         return
       } else {

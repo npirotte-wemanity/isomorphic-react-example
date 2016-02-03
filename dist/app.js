@@ -54,13 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _HttpProvider = __webpack_require__(178);
+	var _HttpProvider = __webpack_require__(159);
 
-	var _client = __webpack_require__(175);
+	var _client = __webpack_require__(160);
 
 	var _client2 = _interopRequireDefault(_client);
 
-	var _App = __webpack_require__(159);
+	var _App = __webpack_require__(161);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -19659,6 +19659,134 @@
 
 /***/ },
 /* 159 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.registerHttpProvider = registerHttpProvider;
+	exports.HttpProvider = HttpProvider;
+	var _provider;
+
+	function registerHttpProvider(provider) {
+	  _provider = provider;
+	}
+
+	function HttpProvider(provider) {
+	  return _provider;
+	}
+
+/***/ },
+/* 160 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/* global XMLHttpRequest */
+
+	function serialize(params) {
+	  var query = '';
+	  for (var key in params) {
+	    query += encodeURIComponent(key) + '=' + encodeURIComponent(params[key]) + '&';
+	  }
+
+	  return query;
+	}
+
+	var HttpProvider = {};
+
+	HttpProvider.get = function (params, cb) {
+	  var http = new XMLHttpRequest();
+	  var url = params.url;
+	  var serializedParams = serialize(params.data);
+	  http.open('GET', url, true);
+
+	  http.onreadystatechange = function () {
+	    // Call a function when the state changes.
+	    if (http.readyState === 4 && http.status === 200) {
+	      if (typeof cb === 'function') {
+	        cb(null, JSON.parse(http.responseText));
+	      }
+	    }
+	  };
+	  http.send(serializedParams);
+	};
+
+	HttpProvider.post = function (params, cb) {
+	  var url = params.url;
+	  var serializedParams = serialize(params.data);
+
+	  var http = new XMLHttpRequest();
+	  http.open('POST', url, true);
+	  // Send the proper header information along with the request
+	  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	  // http.setRequestHeader("Content-length", params.length);
+	  // http.setRequestHeader("Connection", "close");
+
+	  http.onreadystatechange = function () {
+	    // Call a function when the state changes.
+	    if (http.readyState === 4 && http.status === 200) {
+	      if (typeof cb === 'function') {
+	        cb(null, http.responseText);
+	      }
+	    }
+	  };
+	  http.send(serializedParams);
+	};
+
+	HttpProvider.delete = function (params, cb) {
+	  var url = params.url;
+	  var http = new XMLHttpRequest();
+	  // var params = serialize(params.data)
+	  http.open('DELETE', url, true);
+
+	  // Send the proper header information along with the request
+	  // http.setRequestHeader("Content-length", params.length);
+	  // http.setRequestHeader("Connection", "close");
+
+	  http.onreadystatechange = function () {
+	    // Call a function when the state changes.
+	    if (http.readyState === 4 && http.status === 200) {
+	      if (typeof cb === 'function') {
+	        cb(null, http.responseText);
+	      }
+	    }
+	  };
+	  http.send();
+	};
+
+	HttpProvider.put = function (params, cb) {
+	  var url = params.url;
+	  var serializedParams = serialize(params.data);
+
+	  var http = new XMLHttpRequest();
+	  http.open('PUT', url, true);
+
+	  // Send the proper header information along with the request
+	  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	  // http.setRequestHeader("Content-length", params.length);
+	  // http.setRequestHeader("Connection", "close");
+
+	  http.onreadystatechange = function () {
+	    // Call a function when the state changes.
+	    if (http.readyState === 4 && http.status === 200) {
+	      if (typeof cb === 'function') {
+	        cb(null, http.responseText);
+	      }
+	    }
+	  };
+	  http.send(serializedParams);
+	};
+
+	exports.default = HttpProvider;
+
+/***/ },
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19673,19 +19801,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _UserDetails = __webpack_require__(160);
+	var _UserDetails = __webpack_require__(162);
 
 	var _UserDetails2 = _interopRequireDefault(_UserDetails);
 
-	var _TaskList = __webpack_require__(161);
+	var _TaskList = __webpack_require__(163);
 
 	var _TaskList2 = _interopRequireDefault(_TaskList);
 
-	var _TaskForm = __webpack_require__(176);
+	var _TaskForm = __webpack_require__(177);
 
 	var _TaskForm2 = _interopRequireDefault(_TaskForm);
 
-	var _TaskSummary = __webpack_require__(177);
+	var _TaskSummary = __webpack_require__(178);
 
 	var _TaskSummary2 = _interopRequireDefault(_TaskSummary);
 
@@ -19734,7 +19862,7 @@
 	exports.default = App;
 
 /***/ },
-/* 160 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19795,7 +19923,7 @@
 	exports.default = UserDetails;
 
 /***/ },
-/* 161 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19810,15 +19938,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Task = __webpack_require__(162);
+	var _Task = __webpack_require__(164);
 
 	var _Task2 = _interopRequireDefault(_Task);
 
-	var _TaskStore = __webpack_require__(172);
+	var _TaskStore = __webpack_require__(174);
 
 	var _TaskStore2 = _interopRequireDefault(_TaskStore);
 
-	var _TasksActionCreator = __webpack_require__(163);
+	var _TasksActionCreator = __webpack_require__(165);
 
 	var _TasksActionCreator2 = _interopRequireDefault(_TasksActionCreator);
 
@@ -19888,7 +20016,7 @@
 	exports.default = TaskList;
 
 /***/ },
-/* 162 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19903,7 +20031,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TasksActionCreator = __webpack_require__(163);
+	var _TasksActionCreator = __webpack_require__(165);
 
 	var _TasksActionCreator2 = _interopRequireDefault(_TasksActionCreator);
 
@@ -19971,7 +20099,7 @@
 	exports.default = Task;
 
 /***/ },
-/* 163 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19982,23 +20110,23 @@
 	  value: true
 	});
 
-	var _Dispatcher = __webpack_require__(164);
+	var _Dispatcher = __webpack_require__(166);
 
 	var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
-	var _TaskDeleteAction = __webpack_require__(168);
+	var _TaskDeleteAction = __webpack_require__(170);
 
 	var _TaskDeleteAction2 = _interopRequireDefault(_TaskDeleteAction);
 
-	var _TaskAddAction = __webpack_require__(169);
+	var _TaskAddAction = __webpack_require__(171);
 
 	var _TaskAddAction2 = _interopRequireDefault(_TaskAddAction);
 
-	var _TaskToggleAction = __webpack_require__(170);
+	var _TaskToggleAction = __webpack_require__(172);
 
 	var _TaskToggleAction2 = _interopRequireDefault(_TaskToggleAction);
 
-	var _TaskSyncAction = __webpack_require__(171);
+	var _TaskSyncAction = __webpack_require__(173);
 
 	var _TaskSyncAction2 = _interopRequireDefault(_TaskSyncAction);
 
@@ -20039,7 +20167,7 @@
 	exports.default = new TasksActionCreator();
 
 /***/ },
-/* 164 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20048,7 +20176,7 @@
 	  value: true
 	});
 
-	var _flux = __webpack_require__(165);
+	var _flux = __webpack_require__(167);
 
 	var _flux2 = _interopRequireDefault(_flux);
 
@@ -20057,7 +20185,7 @@
 	exports.default = new _flux2.default.Dispatcher();
 
 /***/ },
-/* 165 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20069,11 +20197,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(166);
+	module.exports.Dispatcher = __webpack_require__(168);
 
 
 /***/ },
-/* 166 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20095,7 +20223,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(167);
+	var invariant = __webpack_require__(169);
 
 	var _prefix = 'ID_';
 
@@ -20310,7 +20438,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 167 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20365,7 +20493,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 168 */
+/* 170 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20385,7 +20513,7 @@
 	exports.default = TaskDeleteAction;
 
 /***/ },
-/* 169 */
+/* 171 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20405,7 +20533,7 @@
 	exports.default = TaskDeleteAction;
 
 /***/ },
-/* 170 */
+/* 172 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20425,7 +20553,7 @@
 	exports.default = TaskToggleAction;
 
 /***/ },
-/* 171 */
+/* 173 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20443,7 +20571,7 @@
 	exports.default = TaskSyncAction;
 
 /***/ },
-/* 172 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20454,33 +20582,33 @@
 	  value: true
 	});
 
-	var _immutable = __webpack_require__(173);
+	var _immutable = __webpack_require__(175);
 
 	var _immutable2 = _interopRequireDefault(_immutable);
 
-	var _BaseStore2 = __webpack_require__(174);
+	var _BaseStore2 = __webpack_require__(176);
 
 	var _BaseStore3 = _interopRequireDefault(_BaseStore2);
 
-	var _Dispatcher = __webpack_require__(164);
+	var _Dispatcher = __webpack_require__(166);
 
 	var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
 
-	var _HttpProvider = __webpack_require__(178);
+	var _HttpProvider = __webpack_require__(159);
 
-	var _TaskDeleteAction = __webpack_require__(168);
+	var _TaskDeleteAction = __webpack_require__(170);
 
 	var _TaskDeleteAction2 = _interopRequireDefault(_TaskDeleteAction);
 
-	var _TaskAddAction = __webpack_require__(169);
+	var _TaskAddAction = __webpack_require__(171);
 
 	var _TaskAddAction2 = _interopRequireDefault(_TaskAddAction);
 
-	var _TaskToggleAction = __webpack_require__(170);
+	var _TaskToggleAction = __webpack_require__(172);
 
 	var _TaskToggleAction2 = _interopRequireDefault(_TaskToggleAction);
 
-	var _TaskSyncAction = __webpack_require__(171);
+	var _TaskSyncAction = __webpack_require__(173);
 
 	var _TaskSyncAction2 = _interopRequireDefault(_TaskSyncAction);
 
@@ -20527,6 +20655,7 @@
 	      var _this2 = this;
 
 	      (0, _HttpProvider.HttpProvider)().get({ url: ENDPOINT }, function (err, data) {
+	        console.log(err, data);
 	        if (err) {
 	          return;
 	        } else {
@@ -20646,7 +20775,7 @@
 	exports.default = new TaskStore();
 
 /***/ },
-/* 173 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25633,7 +25762,7 @@
 	}));
 
 /***/ },
-/* 174 */
+/* 176 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25681,114 +25810,7 @@
 	exports.default = BaseStore;
 
 /***/ },
-/* 175 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/* global XMLHttpRequest */
-
-	function serialize(params) {
-	  var query = '';
-	  for (var key in params) {
-	    query += encodeURIComponent(key) + '=' + encodeURIComponent(params[key]) + '&';
-	  }
-
-	  return query;
-	}
-
-	var HttpProvider = {};
-
-	HttpProvider.get = function (params, cb) {
-	  var http = new XMLHttpRequest();
-	  var url = params.url;
-	  var serializedParams = serialize(params.data);
-	  http.open('GET', url, true);
-
-	  http.onreadystatechange = function () {
-	    // Call a function when the state changes.
-	    if (http.readyState === 4 && http.status === 200) {
-	      if (typeof cb === 'function') {
-	        cb(null, JSON.parse(http.responseText));
-	      }
-	    }
-	  };
-	  http.send(serializedParams);
-	};
-
-	HttpProvider.post = function (params, cb) {
-	  var url = params.url;
-	  var serializedParams = serialize(params.data);
-
-	  var http = new XMLHttpRequest();
-	  http.open('POST', url, true);
-	  // Send the proper header information along with the request
-	  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	  // http.setRequestHeader("Content-length", params.length);
-	  // http.setRequestHeader("Connection", "close");
-
-	  http.onreadystatechange = function () {
-	    // Call a function when the state changes.
-	    if (http.readyState === 4 && http.status === 200) {
-	      if (typeof cb === 'function') {
-	        cb(null, http.responseText);
-	      }
-	    }
-	  };
-	  http.send(serializedParams);
-	};
-
-	HttpProvider.delete = function (params, cb) {
-	  var url = params.url;
-	  var http = new XMLHttpRequest();
-	  // var params = serialize(params.data)
-	  http.open('DELETE', url, true);
-
-	  // Send the proper header information along with the request
-	  // http.setRequestHeader("Content-length", params.length);
-	  // http.setRequestHeader("Connection", "close");
-
-	  http.onreadystatechange = function () {
-	    // Call a function when the state changes.
-	    if (http.readyState === 4 && http.status === 200) {
-	      if (typeof cb === 'function') {
-	        cb(null, http.responseText);
-	      }
-	    }
-	  };
-	  http.send();
-	};
-
-	HttpProvider.put = function (params, cb) {
-	  var url = params.url;
-	  var serializedParams = serialize(params.data);
-
-	  var http = new XMLHttpRequest();
-	  http.open('PUT', url, true);
-
-	  // Send the proper header information along with the request
-	  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	  // http.setRequestHeader("Content-length", params.length);
-	  // http.setRequestHeader("Connection", "close");
-
-	  http.onreadystatechange = function () {
-	    // Call a function when the state changes.
-	    if (http.readyState === 4 && http.status === 200) {
-	      if (typeof cb === 'function') {
-	        cb(null, http.responseText);
-	      }
-	    }
-	  };
-	  http.send(serializedParams);
-	};
-
-	exports.default = HttpProvider;
-
-/***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25803,7 +25825,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TasksActionCreator = __webpack_require__(163);
+	var _TasksActionCreator = __webpack_require__(165);
 
 	var _TasksActionCreator2 = _interopRequireDefault(_TasksActionCreator);
 
@@ -25855,7 +25877,7 @@
 	exports.default = TaskForm;
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25870,7 +25892,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TaskStore = __webpack_require__(172);
+	var _TaskStore = __webpack_require__(174);
 
 	var _TaskStore2 = _interopRequireDefault(_TaskStore);
 
@@ -25933,29 +25955,6 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskSummary;
-
-/***/ },
-/* 178 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.registerHttpProvider = registerHttpProvider;
-	exports.HttpProvider = HttpProvider;
-	var _provider;
-
-	function registerHttpProvider(provider) {
-	  console.log(provider);
-	  _provider = provider;
-	}
-
-	function HttpProvider(provider) {
-	  console.log(_provider);
-	  return _provider;
-	}
 
 /***/ }
 /******/ ]);
